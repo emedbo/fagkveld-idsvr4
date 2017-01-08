@@ -1,0 +1,51 @@
+Manus: 
+Slideshow
+----------------------------------------
+
+Tegn og forklar på tavla
+----------------------------------------
+
+IdentityServer-see-the-codez
+----------------------------------------
+1) Vis sample-prosjektet.
+- Test pålogging med Javascript-klient
+- Test "vanlig pålogging". 
+- Test Postman token henting
+	- resourceowner	
+		Kall: 
+
+	- client_credentials
+		Kall: 	
+- Test med å kalle API med disse tokens.
+- Vis Discovery-endepunktet. 
+		- Vis den lokale IdentityServer-endepunktet
+			http://localhost:44444/.well-known/openid-configuration
+		- Vis Azure B2C sitt openidconnect-endepunkt
+			https://login.microsoftonline.com/themoonprod.onmicrosoft.com/.well-known/openid-configuration
+		
+		Gjør en endring i konfigurasjonen (skipp f.eks id-endepunktet) og vis discovery-dokumentet. 
+
+2) Sett opp et tomt prosjekt med IdentityServer. Følgende må på plass: 
+	- Users, clients, resources
+	- Nuget-pakker
+
+	- Hent ut tokens med Postman som forrige prosjekt. 
+
+3) Sett opp et tomt API. 	
+	- Bruk tokens til å kalle API. 
+
+4) Implementer grant store og sett opp en resource med reference token
+	- Endre API slik at EN metode fungerer med reference token, og en metode fungerer med jwt, og en fungerer med begge.
+
+	c) Logg på med javascript-klienten, hent ut token og kall API. 
+
+5) Lag en OAuth2.0-klient i .net core. Gjør akkurat som den som jeg laget til themoon. Implementer "live", men sett opp alt porr først. Vis access token, refresh token og id-token. 
+	- Bruk sample-prosjektet til idsvr
+
+	- En knapp for å hente auth code.
+		- Vis auth code
+	- Vis hente token i Postman. 
+	- En knapp for å hente token
+		- Vis alle token som blir hentet
+	- En knapp for å bruke refresh token. 
+	- Hent også nytt refresh token i postman
