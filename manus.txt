@@ -1,5 +1,8 @@
 Manus: 
 Slideshow
+
+Hybrid flow og implicit flow
+
 ----------------------------------------
 
 Tegn og forklar på tavla
