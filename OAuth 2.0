@@ -1,0 +1,5 @@
+OAuth 2.0
+
+- En spesifikasjon som når implementert gir mulighet til å autorisere applikasjoner tilgang til informasjon om seg selv uten å sende med passord. 
+
+- Tegn tre sirkler: client(meg), "Google" og "API"

@@ -1,7 +1,14 @@
 Manus: 
 Slideshow
 
-Hybrid flow og implicit flow
+Implicit flow: 
+- Token blir sendt tilbake til client direkte, uten en auth_code
+- Mindre sikkert pga dette. 
+- Tillater ikke refresh tokens.
+
+Hybrid flow: 
+- Kombinasjon av auth_code og implicit
+- Får tilbake id-token OG access token
 
 ----------------------------------------
 
@@ -94,3 +101,6 @@ IdentityServer-see-the-codez
 		- Vis alle token som blir hentet
 	- En knapp for å bruke refresh token. 
 	- Hent også nytt refresh token i postman
+
+
+	Dette er altså 
