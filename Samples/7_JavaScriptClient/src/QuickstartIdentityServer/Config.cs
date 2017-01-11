@@ -25,7 +25,7 @@ namespace QuickstartIdentityServer
         {
             return new List<ApiResource>
             {
-                new ApiResource("api1", "My API")
+                new ApiResource("api1", "My API") {ApiSecrets = {new Secret("apisecret".Sha256())}}
             };
         }
 
@@ -53,11 +53,22 @@ namespace QuickstartIdentityServer
                     ClientId = "ro.client",
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
 
-                    ClientSecrets = 
+                    ClientSecrets =
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = { "api1" }
+                    AllowedScopes = { "api1",IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile, },
+                    AllowOfflineAccess = true
+                },
+                new Client
+                {
+                    ClientId = "ref.client",
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                    ClientSecrets = {new Secret("secret".Sha256())},
+                    AccessTokenType  = AccessTokenType.Reference,
+                    AllowedScopes = {"api1"},
+                    AllowOfflineAccess = true
                 },
 
                 // OpenID Connect hybrid flow and client credentials client (MVC)

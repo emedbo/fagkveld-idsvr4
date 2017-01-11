@@ -8,11 +8,19 @@ using Microsoft.AspNetCore.Authorization;
 namespace Api.Controllers
 {
     [Route("[controller]")]
-    [Authorize]
+    
     public class IdentityController : ControllerBase
     {
+        [Authorize]
         [HttpGet]
         public IActionResult Get()
+        {
+            return new JsonResult(from c in User.Claims select new { c.Type, c.Value });
+        }
+
+        [Authorize(ActiveAuthenticationSchemes = "refonly")]
+        [HttpGet("reftoken")]
+        public IActionResult GetWithRefToken()
         {
             return new JsonResult(from c in User.Claims select new { c.Type, c.Value });
         }

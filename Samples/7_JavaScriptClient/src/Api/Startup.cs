@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
+using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -54,8 +55,18 @@ namespace Api
             {
                 Authority = "http://localhost:5000",
                 RequireHttpsMetadata = false,
+                SupportedTokens = SupportedTokens.Jwt,
+                ApiName = "api1",
+                ApiSecret = "apisecret"
+            });
+            
 
-                ApiName = "api1"
+            app.UseOAuth2IntrospectionAuthentication(new OAuth2IntrospectionOptions
+            {
+                AuthenticationScheme = "refonly",
+                Authority = "http://localhost:5000",
+                ClientId = "api1",
+                ClientSecret = "apisecret",
             });
 
             app.UseMvc();
