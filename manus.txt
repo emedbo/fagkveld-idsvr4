@@ -12,14 +12,56 @@ IdentityServer-see-the-codez
 ----------------------------------------
 1) Vis sample-prosjektet.
 - Test pålogging med Javascript-klient
-- Test "vanlig pålogging". 
+- Test "vanlig pålogging". Vis claims. 
 - Test Postman token henting
 	- resourceowner	
 		Kall: 
+		POST: /connect/token
+		grant_type:password
+		client_id:ro.client
+		username:bob
+		password:password
+		scope:api1
+		client_secret:secret
+
+	- UserInfo: 
+		POST: /connect/userinfo
+		Authorization: Bearer <token>
+
+	- Refresh_token
+		POST: /connect/token
+		grant_type: refresh_token
+		client_id:ro.client
+		client_secret:secret
+		refresh_token:<refresh token>
 
 	- client_credentials
 		Kall: 	
+		POST /connect/token
+		grant_type:client_credentials
+		client_id:client
+		client_secret:secret
+		scope:api1
+
+	- Reference token: 
+		Kall: 
+		POST /connect/token
+		grant_type:password
+		client_id:ref.client
+		username:bob
+		password:password
+		scope:api1
+		client_secret_secret
+
 - Test med å kalle API med disse tokens.
+	GET: http://localhost:5001/identity
+	Authorization: Bearer <token>
+
+	- Test også med å kalle reference token client
+	- Test mot API
+
+	Evt endre kode og vis at kun JWT eller kun Reftoken funker
+
 - Vis Discovery-endepunktet. 
 		- Vis den lokale IdentityServer-endepunktet
 			http://localhost:44444/.well-known/openid-configuration
