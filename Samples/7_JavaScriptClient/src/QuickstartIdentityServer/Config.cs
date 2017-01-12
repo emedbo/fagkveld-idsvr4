@@ -94,6 +94,28 @@ namespace QuickstartIdentityServer
                     },
                     AllowOfflineAccess = true
                 },
+                 new Client
+                {
+                    ClientId = "externalmvc",
+                    ClientName = "MVC Client",
+                    AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
+
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
+
+                    RedirectUris = { "http://localhost:55458/hybrid/signin-oidc" },
+                    PostLogoutRedirectUris = { "http://localhost:55458/hybrid" },
+
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "api1"
+                    },
+                    AllowOfflineAccess = true
+                },
 
                 // JavaScript Client
                 new Client

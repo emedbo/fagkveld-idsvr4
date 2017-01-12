@@ -1,0 +1,49 @@
+﻿@model HelligApp.Controllers.HybridViewModel
+
+<div class="row">
+    <a asp-action="Index" class="btn btn-primary">Start igen</a>
+</div>
+
+@if (Model.AuthCode == null && Model.AccessToken == null)
+{
+    <div class="row">
+        <a asp-action="GetAuthCode" class="btn btn-primary">Hent auth code</a>
+    </div>
+}
+
+@if (Model.IdToken != null && Model.AuthCode != null && Model.AccessToken == null)
+{
+    <div class="row">
+        <p>
+            ID-token: <textarea rows="6" class="form-control">@Model.IdToken</textarea>
+        </p>
+        <p>
+            Auth code: <pre>@Model.AuthCode</pre>
+        </p>
+    </div>
+    <div class="row">
+        <a asp-action="GetAccessToken" class="btn btn-primary" asp-route-authCode="@Model.AuthCode" asp-route-idToken="@Model.IdToken">Hent access token</a>
+    </div>
+}
+
+@if (Model.AccessToken != null)
+{
+    <div class="row">
+        <p>
+            Access token:
+            <textarea rows="6" class="form-control">@Model.AccessToken</textarea>
+        </p>
+        <p>
+            ID-token: <textarea rows="6" class="form-control">@Model.IdToken</textarea>
+        </p>
+        <p>
+            Refresh token: <pre>@Model.RefreshToken</pre>
+        </p>
+        <p>
+            Expires in: <pre>@Model.ExpiresIn</pre>
+        </p>
+    </div>
+    <div class="row">
+        <a asp-action="GetRefreshToken" class="btn btn-primary" asp-route-refreshToken="@Model.RefreshToken" asp-route-idToken="@Model.IdToken">Hent refresh token</a>
+    </div>
+}
