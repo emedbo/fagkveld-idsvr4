@@ -59,18 +59,6 @@ namespace HelligApp.Controllers
             return RedirectToAction("Index", CreateViewModelForUriRedirect(vm));
         }
 
-        private object CreateViewModelForUriRedirect(HybridViewModel vm)
-        {
-            return new
-            {
-                authCode = vm.AuthCode,
-                idToken = vm.IdToken,
-                accesstoken = vm.AccessToken,
-                expiresin = vm.ExpiresIn,
-                refreshtoken = vm.RefreshToken
-            };
-        }
-
         [HttpGet]
         public async Task<IActionResult> GetAccessToken(string authCode, string idToken )
         {
@@ -132,6 +120,18 @@ namespace HelligApp.Controllers
         private string CreateUrl(string path)
         {
             return IdSvr + path;
+        }
+
+        private object CreateViewModelForUriRedirect(HybridViewModel vm)
+        {
+            return new
+            {
+                authCode = vm.AuthCode,
+                idToken = vm.IdToken,
+                accesstoken = vm.AccessToken,
+                expiresin = vm.ExpiresIn,
+                refreshtoken = vm.RefreshToken
+            };
         }
     }
 
