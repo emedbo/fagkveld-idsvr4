@@ -18,6 +18,7 @@ namespace QuickstartIdentityServer
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
+                new IdentityResource("message", new List<string>{ "secretMessage" })
             };
         }
 
@@ -25,7 +26,8 @@ namespace QuickstartIdentityServer
         {
             return new List<ApiResource>
             {
-                new ApiResource("api1", "My API") {ApiSecrets = {new Secret("apisecret".Sha256())}}
+                new ApiResource("api1", "My API") {ApiSecrets = {new Secret("apisecret".Sha256())}},
+                new ApiResource("secretApi") {UserClaims = new List<string> {"secretMessage" }}
             };
         }
 
@@ -57,8 +59,9 @@ namespace QuickstartIdentityServer
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = { "api1",IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile, },
+                    AllowedScopes = { "api1","secretApi",IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile, "message"},
+                    
                     AllowOfflineAccess = true
                 },
                 new Client
@@ -164,7 +167,8 @@ namespace QuickstartIdentityServer
                     Claims = new List<Claim>
                     {
                         new Claim("name", "Bob"),
-                        new Claim("website", "https://bob.com")
+                        new Claim("website", "https://bob.com"),
+                        new Claim("secretMessage", "http://bilder.hest.no/hest//brukerbilder/46629/avsnitt/3432900.jpg")
                     }
                 }
             };
