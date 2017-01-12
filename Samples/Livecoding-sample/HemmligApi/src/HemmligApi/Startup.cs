@@ -39,13 +39,6 @@ namespace HemmligApi
             loggerFactory.AddDebug();
           
             app.UseMvc();
-            app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
-            {
-                Authority = "http://localhost:5000",
-                ApiName = "api1",
-                RequireHttpsMetadata = false
-            });
-
         }
     }
 }
