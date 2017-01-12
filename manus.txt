@@ -98,8 +98,38 @@ IdentityServer-see-the-codez
                     "&redirect_uri=http%3A%2F%2Flocalhost%3A55458%2Fhybrid%2Fsignin-oidc";
 
 		- Vis auth code
+ var vm = new HybridViewModel
+            {
+                IdToken = Request.Form["id_token"],
+                AuthCode = Request.Form["code"],
+            };
+            return RedirectToAction("Index", CreateViewModelForUriRedirect(vm));
+		
 	- Vis hente token i Postman. 
 	- En knapp for å hente token
-		- Vis alle token som blir hentet
+	var client = new HttpClient();
+            client.BaseAddress = new Uri(IdSvr, UriKind.Absolute);
+            var result = await client.PostAsync("/connect/token", new FormUrlEncodedContent(new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("client_id", clientId),
+                new KeyValuePair<string, string>("client_secret", clientSecret),
+                new KeyValuePair<string, string>("grant_type", "authorization_code"),
+                new KeyValuePair<string, string>("redirect_uri", RedirectUri),
+                new KeyValuePair<string, string>("code", authCode)
+            }));
+            var content = await result.Content.ReadAsStringAsync();
+		
 	- En knapp for å bruke refresh token. 
+	 var client = new HttpClient();
+            client.BaseAddress = new Uri(IdSvr, UriKind.Absolute);
+            var postAsync = await client.PostAsync("/connect/token", new FormUrlEncodedContent(new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("client_id", clientId),
+                new KeyValuePair<string, string>("client_secret", clientSecret),
+                new KeyValuePair<string, string>("grant_type", "refresh_token"),
+                new KeyValuePair<string, string>("refresh_token", refreshToken)
+            }));
+
+            var content = await postAsync.Content.ReadAsStringAsync();
+
 	- Hent også nytt refresh token i postman
