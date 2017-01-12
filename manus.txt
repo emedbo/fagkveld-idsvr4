@@ -1,14 +1,7 @@
 Manus: 
 Slideshow
 
-Implicit flow: 
-- Token blir sendt tilbake til client direkte, uten en auth_code
-- Mindre sikkert pga dette. 
-- Tillater ikke refresh tokens.
-
-Hybrid flow: 
-- Kombinasjon av auth_code og implicit
-- Får tilbake id-token OG access token
+Hybrid flow og implicit flow
 
 ----------------------------------------
 
@@ -95,12 +88,18 @@ IdentityServer-see-the-codez
 	- Bruk sample-prosjektet til idsvr
 
 	- En knapp for å hente auth code.
+		"connect/authorize" +
+                    "?response_type=code+id_token" +
+                    "&response_mode=form_post" +
+                    "&client_id=externalmvc" +
+                    "&client_secret=secret" +
+                    "&scope=offline_access+openid" +
+                    "&nonce=123" +
+                    "&redirect_uri=http%3A%2F%2Flocalhost%3A55458%2Fhybrid%2Fsignin-oidc";
+
 		- Vis auth code
 	- Vis hente token i Postman. 
 	- En knapp for å hente token
 		- Vis alle token som blir hentet
 	- En knapp for å bruke refresh token. 
 	- Hent også nytt refresh token i postman
-
-
-	Dette er altså 

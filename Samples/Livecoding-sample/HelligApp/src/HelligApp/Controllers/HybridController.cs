@@ -17,83 +17,34 @@ namespace HelligApp.Controllers
         private const string clientId = "externalmvc";
         private const string clientSecret = "secret";
 
-        
-
         public IActionResult Index(string authCode, string idToken, string accesstoken, string expiresin, string refreshtoken)
         {
-            var vm = new HybridViewModel
-            {
-                IdToken = idToken,
-                AuthCode = authCode,
-                AccessToken = accesstoken,
-                RefreshToken = refreshtoken,
-                ExpiresIn = expiresin
-            };
+            var vm = new HybridViewModel{IdToken = idToken,AuthCode = authCode,AccessToken = accesstoken,RefreshToken = refreshtoken,ExpiresIn = expiresin};
             return View("Index", vm);
         }
 
-        public IActionResult GetAuthCode()
-        {
-            var path =
-                CreateUrl(
-                    "connect/authorize" +
-                    "?response_type=code+id_token" +
-                    "&response_mode=form_post" +
-                    "&client_id=externalmvc" +
-                    "&client_secret=secret" +
-                    "&scope=offline_access+openid" +
-                    "&nonce=123" +
-                    "&redirect_uri=" +
-                    UrlEncodedRedirectUri);
-            return Redirect(path);
-        }
+        //public IActionResult GetAuthCode()
+        //{
+            
+        //}
 
-        [HttpPost("hybrid/signin-oidc")]
-        public IActionResult AuthCodeReceived_Post()
-        {
-            var vm = new HybridViewModel
-            {
-                IdToken = Request.Form["id_token"],
-                AuthCode = Request.Form["code"],
-            };
-            return RedirectToAction("Index", CreateViewModelForUriRedirect(vm));
-        }
+        //[HttpPost("hybrid/signin-oidc")]
+        //public IActionResult AuthCodeReceived_Post()
+        //{
+           
+        //}
 
-        [HttpGet]
-        public async Task<IActionResult> GetAccessToken(string authCode, string idToken )
-        {
-            var client = new HttpClient();
-            client.BaseAddress = new Uri(IdSvr, UriKind.Absolute);
-            var result = await client.PostAsync("/connect/token", new FormUrlEncodedContent(new List<KeyValuePair<string, string>>
-            {
-                new KeyValuePair<string, string>("client_id", clientId),
-                new KeyValuePair<string, string>("client_secret", clientSecret),
-                new KeyValuePair<string, string>("grant_type", "authorization_code"),
-                new KeyValuePair<string, string>("redirect_uri", RedirectUri),
-                new KeyValuePair<string, string>("code", authCode)
-            }));
-            var content = await result.Content.ReadAsStringAsync();
-            var vm = ParseToAuthCodeViewModel(content, idToken);
-            return RedirectToAction("Index", CreateViewModelForUriRedirect(vm));
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> GetAccessToken(string authCode, string idToken )
+        //{
+        
+        //}
 
-        [HttpGet]
-        public async Task<IActionResult> GetRefreshToken(string refreshToken, string idToken)
-        {
-            var client = new HttpClient();
-            client.BaseAddress = new Uri(IdSvr, UriKind.Absolute);
-            var postAsync = await client.PostAsync("/connect/token", new FormUrlEncodedContent(new List<KeyValuePair<string, string>>
-            {
-                new KeyValuePair<string, string>("client_id", clientId),
-                new KeyValuePair<string, string>("client_secret", clientSecret),
-                new KeyValuePair<string, string>("grant_type", "refresh_token"),
-                new KeyValuePair<string, string>("refresh_token", refreshToken)
-            }));
-
-            var content = await postAsync.Content.ReadAsStringAsync();
-            var vm = ParseToAuthCodeViewModel(content, idToken);
-            return RedirectToAction("Index", CreateViewModelForUriRedirect(vm));
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> GetRefreshToken(string refreshToken, string idToken)
+        //{
+        
+        //}
 
 
         private HybridViewModel ParseToAuthCodeViewModel(string content, string idToken)
